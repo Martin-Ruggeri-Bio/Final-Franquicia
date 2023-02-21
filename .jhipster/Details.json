@@ -1,0 +1,31 @@
+{
+  "applications": ["finalfranquicia"],
+  "changelogDate": "20230221220742",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "details",
+  "fields": [
+    {
+      "fieldName": "amount",
+      "fieldType": "Integer"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Details",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "menu",
+      "relationshipName": "menu",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "sale",
+      "relationshipName": "sale",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

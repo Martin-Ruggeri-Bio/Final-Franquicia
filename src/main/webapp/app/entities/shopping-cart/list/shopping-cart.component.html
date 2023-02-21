@@ -1,0 +1,96 @@
+<div>
+  <h2 id="page-heading" data-cy="ShoppingCartHeading">
+    <span jhiTranslate="finalfranquiciaApp.shoppingCart.home.title">Shopping Carts</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="finalfranquiciaApp.shoppingCart.home.refreshListLabel">Refrescar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-shopping-cart"
+        [routerLink]="['/shopping-cart/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="finalfranquiciaApp.shoppingCart.home.createLabel"> Crear nuevo Shopping Cart </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="shoppingCarts?.length === 0">
+    <span jhiTranslate="finalfranquiciaApp.shoppingCart.home.notFound">Ningún Shopping Carts encontrado</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="shoppingCarts && shoppingCarts.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="amount">
+            <span jhiTranslate="finalfranquiciaApp.shoppingCart.amount">Amount</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="menu.id">
+            <span jhiTranslate="finalfranquiciaApp.shoppingCart.menu">Menu</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="client.id">
+            <span jhiTranslate="finalfranquiciaApp.shoppingCart.client">Client</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let shoppingCart of shoppingCarts; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/shopping-cart', shoppingCart.id, 'view']">{{ shoppingCart.id }}</a>
+          </td>
+          <td>{{ shoppingCart.amount }}</td>
+          <td>
+            <div *ngIf="shoppingCart.menu">
+              <a [routerLink]="['/menu', shoppingCart.menu.id, 'view']">{{ shoppingCart.menu?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="shoppingCart.client">
+              <a [routerLink]="['/client', shoppingCart.client.id, 'view']">{{ shoppingCart.client?.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/shopping-cart', shoppingCart.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/shopping-cart', shoppingCart.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(shoppingCart)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

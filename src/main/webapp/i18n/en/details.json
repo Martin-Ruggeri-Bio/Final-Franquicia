@@ -1,0 +1,26 @@
+{
+  "finalfranquiciaApp": {
+    "details": {
+      "home": {
+        "title": "Details",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Details",
+        "createOrEditLabel": "Create or edit a Details",
+        "notFound": "No Details found"
+      },
+      "created": "A new Details is created with identifier {{ param }}",
+      "updated": "A Details is updated with identifier {{ param }}",
+      "deleted": "A Details is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Details {{ id }}?"
+      },
+      "detail": {
+        "title": "Details"
+      },
+      "id": "ID",
+      "amount": "Amount",
+      "menu": "Menu",
+      "sale": "Sale"
+    }
+  }
+}

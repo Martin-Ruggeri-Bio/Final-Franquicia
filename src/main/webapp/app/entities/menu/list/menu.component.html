@@ -1,0 +1,94 @@
+<div>
+  <h2 id="page-heading" data-cy="MenuHeading">
+    <span jhiTranslate="finalfranquiciaApp.menu.home.title">Menus</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="finalfranquiciaApp.menu.home.refreshListLabel">Refrescar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-menu"
+        [routerLink]="['/menu/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="finalfranquiciaApp.menu.home.createLabel"> Crear nuevo Menu </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="menus?.length === 0">
+    <span jhiTranslate="finalfranquiciaApp.menu.home.notFound">Ningún Menus encontrado</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="menus && menus.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="nombre">
+            <span jhiTranslate="finalfranquiciaApp.menu.nombre">Nombre</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="descripcion">
+            <span jhiTranslate="finalfranquiciaApp.menu.descripcion">Descripcion</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="precio">
+            <span jhiTranslate="finalfranquiciaApp.menu.precio">Precio</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="urlImagen">
+            <span jhiTranslate="finalfranquiciaApp.menu.urlImagen">Url Imagen</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="activo">
+            <span jhiTranslate="finalfranquiciaApp.menu.activo">Activo</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="creado">
+            <span jhiTranslate="finalfranquiciaApp.menu.creado">Creado</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="actualizado">
+            <span jhiTranslate="finalfranquiciaApp.menu.actualizado">Actualizado</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let menu of menus; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/menu', menu.id, 'view']">{{ menu.id }}</a>
+          </td>
+          <td>{{ menu.nombre }}</td>
+          <td>{{ menu.descripcion }}</td>
+          <td>{{ menu.precio }}</td>
+          <td>{{ menu.urlImagen }}</td>
+          <td>{{ menu.activo }}</td>
+          <td>{{ menu.creado }}</td>
+          <td>{{ menu.actualizado }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/menu', menu.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/menu', menu.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(menu)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
